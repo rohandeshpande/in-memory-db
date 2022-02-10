@@ -1,4 +1,4 @@
-package com.friendbuy.dataStore;
+package org.sample.dataStore.interfaces;
 
 public interface DataStore {
     void set(String key, Integer value);

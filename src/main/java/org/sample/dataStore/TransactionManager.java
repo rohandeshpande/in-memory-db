@@ -1,4 +1,6 @@
-package com.friendbuy.dataStore;
+package org.sample.dataStore;
+
+import org.sample.dataStore.interfaces.DataStore;
 
 import java.util.Map;
 

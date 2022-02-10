@@ -1,6 +1,8 @@
-package com.friendbuy.command;
+package org.sample.command;
 
-import com.friendbuy.dataStore.DataStore;
+import org.sample.command.constant.Output;
+import org.sample.command.interfaces.CommandExecutor;
+import org.sample.dataStore.interfaces.DataStore;
 
 public class GetCommand extends GenericCommand implements CommandExecutor {
     private DataStore dataStore;

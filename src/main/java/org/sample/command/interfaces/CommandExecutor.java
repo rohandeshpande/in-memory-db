@@ -1,4 +1,4 @@
-package com.friendbuy.command;
+package org.sample.command.interfaces;
 
 public interface CommandExecutor {
     void execute(String input);

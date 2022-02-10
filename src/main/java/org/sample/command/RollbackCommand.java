@@ -1,6 +1,7 @@
-package com.friendbuy.command;
+package org.sample.command;
 
-import com.friendbuy.dataStore.TransactionManager;
+import org.sample.command.interfaces.CommandExecutor;
+import org.sample.dataStore.TransactionManager;
 
 public class RollbackCommand extends GenericCommand implements CommandExecutor {
     private TransactionManager transactionManager;

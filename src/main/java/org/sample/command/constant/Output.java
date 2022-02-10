@@ -1,4 +1,4 @@
-package com.friendbuy.command;
+package org.sample.command.constant;
 
 public enum Output {
     NULL("NULL");

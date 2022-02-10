@@ -1,8 +1,7 @@
-package com.friendbuy.command;
+package org.sample.command;
 
-import com.friendbuy.dataStore.DataStore;
-import com.friendbuy.dataStore.TransactionDataStore;
-import com.friendbuy.dataStore.TransactionManager;
+import org.sample.command.interfaces.CommandExecutor;
+import org.sample.dataStore.TransactionManager;
 
 public class BeginCommand extends GenericCommand implements CommandExecutor {
     private TransactionManager transactionManager;
