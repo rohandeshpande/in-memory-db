@@ -6,9 +6,9 @@ import org.sample.dataStore.interfaces.DataStore;
 
 public class GetCommand extends GenericCommand implements CommandExecutor {
     private DataStore dataStore;
-    private String output;
 
     public GetCommand(DataStore dataStore) {
+        super(2);
         this.dataStore = dataStore;
     }
 

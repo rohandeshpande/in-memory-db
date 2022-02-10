@@ -7,6 +7,7 @@ public class RollbackCommand extends GenericCommand implements CommandExecutor {
     private TransactionManager transactionManager;
 
     public RollbackCommand(TransactionManager transactionManager) {
+        super(1);
         this.transactionManager = transactionManager;
     }
 

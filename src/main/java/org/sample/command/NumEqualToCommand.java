@@ -7,6 +7,7 @@ public class NumEqualToCommand extends GenericCommand implements CommandExecutor
     private DataStore dataStore;
 
     public NumEqualToCommand(DataStore dataStore) {
+        super(2);
         this.dataStore = dataStore;
     }
 
@@ -20,6 +21,7 @@ public class NumEqualToCommand extends GenericCommand implements CommandExecutor
     @Override
     public void parse(String input) {
         String[] tokens = input.split(" ");
+        isValid(tokens.length);
         if (tokens.length == 2) {
             super.value = Integer.parseInt(tokens[1]);
         }

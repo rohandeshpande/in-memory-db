@@ -9,6 +9,7 @@ public class CommitCommand extends GenericCommand implements CommandExecutor {
     private DataStore dataStore;
 
     public CommitCommand(TransactionManager transactionManager, DataStore dataStore) {
+        super(1);
         this.transactionManager = transactionManager;
         this.dataStore = dataStore;
     }

@@ -7,6 +7,7 @@ public class UnsetCommand extends GenericCommand implements CommandExecutor {
     private DataStore dataStore;
 
     public UnsetCommand(DataStore dataStore) {
+        super(2);
         this.dataStore = dataStore;
     }
 

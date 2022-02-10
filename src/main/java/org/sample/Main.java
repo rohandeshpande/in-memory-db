@@ -42,10 +42,14 @@ public class Main {
 
             if (Command.END.name().equals(input)) {
                 System.exit(0);
-            } else {
+            }
+            try {
                 CommandExecutor commandExecutor = commandFactory.get(inputCommand);
                 commandExecutor.execute(input);
+            } catch (Exception exception) {
+                System.out.println("Invalid Input");
             }
+
         }
     }
 
@@ -63,9 +67,7 @@ public class Main {
 
 //TODO
 /*
-- add validator for each command
 - add print method for each command
-- add test cases
 - complete transaction
 - add comments
  */

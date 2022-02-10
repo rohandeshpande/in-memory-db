@@ -7,6 +7,7 @@ public class SetCommand extends GenericCommand implements CommandExecutor {
     private DataStore dataStore;
 
     public SetCommand(DataStore dataStore) {
+        super(3);
         this.dataStore = dataStore;
     }
 
