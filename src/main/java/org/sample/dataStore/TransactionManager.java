@@ -1,37 +1,55 @@
 package org.sample.dataStore;
 
+import org.sample.command.constant.Output;
 import org.sample.dataStore.interfaces.DataStore;
 
-import java.util.Map;
+import java.util.Iterator;
 
 public class TransactionManager {
-    private boolean transactionInProgress;
     private TransactionDataStore transactionDataStore;
+    private InMemoryDataStore inMemoryDataStore;
 
-    public TransactionManager(TransactionDataStore transactionDataStore) {
+    public TransactionManager(TransactionDataStore transactionDataStore, InMemoryDataStore inMemoryDataStore) {
         this.transactionDataStore = transactionDataStore;
+        this.inMemoryDataStore = inMemoryDataStore;
     }
 
     public boolean isTransactionInProgress() {
-        return transactionInProgress;
+        return !transactionDataStore.getStack().isEmpty();
     }
 
     public void begin() {
-        transactionInProgress = true;
-        transactionDataStore.initRollBackStack();
+        InMemoryDataStore stackInMemoryDataStore = new InMemoryDataStore();
+        this.inMemoryDataStore.getDataMap().forEach((k, v) -> {
+            stackInMemoryDataStore.set(k, v);
+        });
+        transactionDataStore.getStack().push(stackInMemoryDataStore);
     }
 
     public void rollback() {
-        transactionDataStore.processRollback();
+        try {
+            transactionDataStore.getStack().pop();
+        } catch (Exception exception) {
+            System.out.println(Output.NO_TRANSACTION.getPrintVal());
+        }
     }
 
-    public void commit(DataStore dataStore) {
-        //Copy data from TransactionDataStore to DataStore
-        while (!transactionDataStore.dequeAsStack.isEmpty()) {
-            Map<String, Integer> map = transactionDataStore.dequeAsStack.pop();
-            for(String key : map.keySet()) {
-                dataStore.set(key, map.get(key));
-            }
+    public void commit() {
+        Iterator<InMemoryDataStore> itr = transactionDataStore.getStack().descendingIterator();
+        while (itr.hasNext()) {
+            InMemoryDataStore inMemoryDataStore = itr.next();
+            inMemoryDataStore.getDataMap().forEach((k, v) -> {
+                this.inMemoryDataStore.set(k, v);
+            });
+        }
+        transactionDataStore.getStack().clear();
+    }
+
+    public DataStore getDataStore() {
+        if (isTransactionInProgress()) {
+            return transactionDataStore;
+        } else {
+            return inMemoryDataStore;
         }
     }
 }

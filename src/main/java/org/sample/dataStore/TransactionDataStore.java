@@ -4,61 +4,43 @@ import org.sample.dataStore.interfaces.DataStore;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Map;
 
 public class TransactionDataStore implements DataStore {
-    Deque<Map<String, Integer>> dequeAsStack = new ArrayDeque<>();
-    Deque<Integer> rollbackCountStack = new ArrayDeque<>();
+    private Deque<InMemoryDataStore> stack = new ArrayDeque<>();
+
+    public Deque<InMemoryDataStore> getStack() {
+        return stack;
+    }
 
     @Override
     public void set(String key, Integer value) {
-        Map<String,Integer> map = Map.of(key, value);
-        dequeAsStack.push(map);
-        Integer count = rollbackCountStack.pop();
-        rollbackCountStack.push(++count);
+        InMemoryDataStore inMemoryDataStore = stack.pop();
+        inMemoryDataStore.set(key, value);
+        stack.push(inMemoryDataStore);
     }
 
     @Override
     public void unset(String key) {
-        dequeAsStack.pop();
-        Integer count = rollbackCountStack.pop();
-        rollbackCountStack.push(--count);
+        InMemoryDataStore inMemoryDataStore = stack.pop();
+        inMemoryDataStore.unset(key);
+        stack.push(inMemoryDataStore);
     }
 
     @Override
     public Integer get(String key) {
-        Map<String,Integer> map = dequeAsStack.peek();
-        return map.getOrDefault(key, null);
+        if (!stack.isEmpty()) {
+            InMemoryDataStore inMemoryDataStore = stack.peek();
+            return inMemoryDataStore.get(key);
+        }
+        return null;
     }
 
     @Override
     public Integer numEqualTo(Integer value) {
-        int count = 0;
-        Map<String,Integer> map = dequeAsStack.peek();
-        if (map == null || map.values() == null) {
-            return count;
+        if (!stack.isEmpty()) {
+            InMemoryDataStore inMemoryDataStore = stack.peek();
+            return inMemoryDataStore.numEqualTo(value);
         }
-        for(Integer i : map.values()) {
-            if (i == value) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-
-    public void initRollBackStack() {
-        rollbackCountStack.push(0);
-    }
-
-    public void processRollback() {
-        int countToRollback = rollbackCountStack.pop();
-        try{
-            for (int i = 0; i < countToRollback; i++) {
-                dequeAsStack.pop();
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+        return 0;
     }
 }

@@ -4,7 +4,7 @@ import org.sample.command.interfaces.CommandExecutor;
 import org.sample.dataStore.TransactionManager;
 
 public class BeginCommand extends GenericCommand implements CommandExecutor {
-    private TransactionManager transactionManager;
+    private final TransactionManager transactionManager;
 
     public BeginCommand(TransactionManager transactionManager) {
         super(1);

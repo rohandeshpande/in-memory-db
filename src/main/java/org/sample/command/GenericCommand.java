@@ -11,7 +11,7 @@ public abstract class GenericCommand {
 
     void isValid(int inputTokenCount) {
         if (validTokenCount != inputTokenCount) {
-            throw new RuntimeException("Input is not valid");
+            throw new RuntimeException("Invalid input");
         }
     }
 

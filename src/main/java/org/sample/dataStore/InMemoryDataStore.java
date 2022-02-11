@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InMemoryDataStore implements DataStore {
-    private final Map<String,Integer> dataMap = new HashMap<>();
-    private final Map<Integer,Integer> countValueMap = new HashMap<>();
+    private final Map<String, Integer> dataMap = new HashMap<>();
+    private final Map<Integer, Integer> countValueMap = new HashMap<>();
+
+    public Map<String, Integer> getDataMap() {
+        return dataMap;
+    }
 
     @Override
     public void set(String key, Integer value) {
@@ -35,13 +39,14 @@ public class InMemoryDataStore implements DataStore {
     }
 
     private void incrementCount(Integer value) {
-        countValueMap.put(value, countValueMap.getOrDefault(value,0)+1);
+        countValueMap.put(value, countValueMap.getOrDefault(value, 0) + 1);
     }
 
     private void decrementCount(Integer value) {
         if (value == null) {
             return;
         }
-        countValueMap.put(value, countValueMap.get(value)-1);
+        countValueMap.put(value, countValueMap.get(value) - 1);
     }
+
 }

@@ -4,7 +4,7 @@ import org.sample.command.interfaces.CommandExecutor;
 import org.sample.dataStore.interfaces.DataStore;
 
 public class NumEqualToCommand extends GenericCommand implements CommandExecutor {
-    private DataStore dataStore;
+    private final DataStore dataStore;
 
     public NumEqualToCommand(DataStore dataStore) {
         super(2);

@@ -1,7 +1,8 @@
 package org.sample.command.constant;
 
 public enum Output {
-    NULL("NULL");
+    NULL("NULL"),
+    NO_TRANSACTION("NO TRANSACTION");
 
     String printVal;
 
