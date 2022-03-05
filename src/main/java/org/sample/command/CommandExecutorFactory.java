@@ -1,7 +1,14 @@
 package org.sample.command;
 
-import org.sample.command.constant.Command;
-import org.sample.command.interfaces.CommandExecutor;
+import org.sample.command.constant.CommandType;
+import org.sample.command.impl.BeginCommand;
+import org.sample.command.impl.CommitCommand;
+import org.sample.command.impl.EndCommand;
+import org.sample.command.impl.GetCommand;
+import org.sample.command.impl.NumEqualToCommand;
+import org.sample.command.impl.RollbackCommand;
+import org.sample.command.impl.SetCommand;
+import org.sample.command.impl.UnsetCommand;
 import org.sample.dataStore.TransactionManager;
 
 public class CommandExecutorFactory {
@@ -11,22 +18,22 @@ public class CommandExecutorFactory {
         this.transactionManager = transactionManager;
     }
 
-    public CommandExecutor getCommandExecutor(Command command) {
-        if (Command.BEGIN.equals(command)) {
+    public Command getCommand(CommandType commandType) {
+        if (CommandType.BEGIN.equals(commandType)) {
             return new BeginCommand(transactionManager);
-        } else if (Command.ROLLBACK.equals(command)) {
+        } else if (CommandType.ROLLBACK.equals(commandType)) {
             return new RollbackCommand(transactionManager);
-        } else if (Command.COMMIT.equals(command)) {
+        } else if (CommandType.COMMIT.equals(commandType)) {
             return new CommitCommand(transactionManager);
-        } else if (Command.SET.equals(command)) {
+        } else if (CommandType.SET.equals(commandType)) {
             return new SetCommand(transactionManager.getDataStore());
-        } else if (Command.UNSET.equals(command)) {
+        } else if (CommandType.UNSET.equals(commandType)) {
             return new UnsetCommand(transactionManager.getDataStore());
-        } else if (Command.GET.equals(command)) {
+        } else if (CommandType.GET.equals(commandType)) {
             return new GetCommand(transactionManager.getDataStore());
-        } else if (Command.NUMEQUALTO.equals(command)) {
+        } else if (CommandType.NUMEQUALTO.equals(commandType)) {
             return new NumEqualToCommand(transactionManager.getDataStore());
-        } else if (Command.END.equals(command)) {
+        } else if (CommandType.END.equals(commandType)) {
             return new EndCommand();
         }
         throw new RuntimeException("Command not found");

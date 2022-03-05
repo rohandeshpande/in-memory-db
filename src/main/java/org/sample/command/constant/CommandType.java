@@ -1,6 +1,6 @@
 package org.sample.command.constant;
 
-public enum Command {
+public enum CommandType {
     SET,
     GET,
     UNSET,

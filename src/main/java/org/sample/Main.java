@@ -1,10 +1,11 @@
 package org.sample;
 
+import org.sample.command.Command;
 import org.sample.command.CommandExecutorFactory;
-import org.sample.command.constant.Command;
-import org.sample.command.interfaces.CommandExecutor;
-import org.sample.dataStore.InMemoryDataStore;
-import org.sample.dataStore.TransactionDataStore;
+import org.sample.command.CommandHolder;
+import org.sample.command.constant.CommandType;
+import org.sample.dataStore.impl.InMemoryDataStore;
+import org.sample.dataStore.impl.TransactionDataStore;
 import org.sample.dataStore.TransactionManager;
 
 import java.util.Scanner;
@@ -20,10 +21,15 @@ public class Main {
         while (true) {
             Scanner in = new Scanner(System.in);
             String input = in.nextLine();
-            Command inputCommand = getCommand(input);
+            CommandType inputCommandType = getCommand(input);
             try {
-                CommandExecutor commandExecutor = commandExecutorFactory.getCommandExecutor(inputCommand);
-                commandExecutor.execute(input);
+                Command command = commandExecutorFactory.getCommand(inputCommandType);
+                if (command.isValid(input)) {
+                    CommandHolder commandHolder = command.parse(input);
+                    command.execute(commandHolder);
+                } else {
+                    throw new RuntimeException("Invalid input");
+                }
             } catch (Exception exception) {
                 exception.printStackTrace();
                 System.out.println(exception.getMessage());
@@ -31,13 +37,13 @@ public class Main {
         }
     }
 
-    private static Command getCommand(String input) {
+    private static CommandType getCommand(String input) {
         String command = "";
         if (input.contains(" ")) {
             command = input.substring(0, input.indexOf(" "));
         } else {
             command = input;
         }
-        return Command.valueOf(command);
+        return CommandType.valueOf(command);
     }
 }

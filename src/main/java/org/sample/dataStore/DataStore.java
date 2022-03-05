@@ -1,4 +1,4 @@
-package org.sample.dataStore.interfaces;
+package org.sample.dataStore;
 
 public interface DataStore {
     void set(String key, Integer value);

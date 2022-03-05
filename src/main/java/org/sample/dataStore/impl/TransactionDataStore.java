@@ -1,6 +1,6 @@
-package org.sample.dataStore;
+package org.sample.dataStore.impl;
 
-import org.sample.dataStore.interfaces.DataStore;
+import org.sample.dataStore.DataStore;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
