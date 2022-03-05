@@ -10,7 +10,7 @@ import org.sample.dataStore.TransactionManager;
 
 import java.util.Scanner;
 
-public class Main {
+public class InMemoryDBLauncher {
 
     private static final InMemoryDataStore inMemoryDataStore = new InMemoryDataStore();
     private static final TransactionDataStore transactionDataStore = new TransactionDataStore();

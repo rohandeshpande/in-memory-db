@@ -12,7 +12,7 @@ import org.sample.command.impl.UnsetCommand;
 import org.sample.dataStore.TransactionManager;
 
 public class CommandExecutorFactory {
-    private TransactionManager transactionManager;
+    private final TransactionManager transactionManager;
 
     public CommandExecutorFactory(TransactionManager transactionManager) {
         this.transactionManager = transactionManager;

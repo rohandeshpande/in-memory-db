@@ -15,7 +15,7 @@ public class TransactionManager {
         this.inMemoryDataStore = inMemoryDataStore;
     }
 
-    public boolean isTransactionInProgress() {
+    private boolean isTransactionInProgress() {
         return !transactionDataStore.getStack().isEmpty();
     }
 
